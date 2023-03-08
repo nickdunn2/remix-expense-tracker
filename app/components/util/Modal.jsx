@@ -9,7 +9,7 @@ function Modal({ children, onClose }) {
         {children}
       </dialog>
     </div>
-  );
+  )
 }
 
-export default Modal;
+export default Modal
