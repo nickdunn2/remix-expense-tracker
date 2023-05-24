@@ -15,6 +15,22 @@ export async function getExpenses() {
   }
 }
 
+/**
+ * Get a single expense by id.
+ */
+export async function getExpense(id) {
+  try {
+    return await prisma.expense.findFirst({
+      where: {
+        id
+      }
+    })
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
 export async function addExpense(expenseData) {
   try {
     return await prisma.expense.create({
