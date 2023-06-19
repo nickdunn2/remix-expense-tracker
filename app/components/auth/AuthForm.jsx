@@ -26,7 +26,7 @@ function AuthForm() {
         <input type="password" id="password" name="password" minLength={7} />
       </p>
       <div className="form-actions">
-        <button>{ submitBtnCaption }</button>
+        <button disabled={isSubmitting}>{ isSubmitting ? 'Authenticating...' : submitBtnCaption }</button>
         <Link to={queryParam}>{ toggleBtnCaption }</Link>
       </div>
     </Form>
