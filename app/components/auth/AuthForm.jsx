@@ -1,13 +1,16 @@
 import { FaLock, FaUserPlus } from 'react-icons/fa'
-import { Form, Link, useSearchParams } from '@remix-run/react'
+import { Form, Link, useNavigation, useSearchParams } from '@remix-run/react'
 
 function AuthForm() {
   const [searchParams] = useSearchParams()
+  const navigation = useNavigation()
   const authMode = searchParams.get('mode') ?? 'login'
 
   const submitBtnCaption = authMode === 'login' ? 'Log In' : 'Create User'
   const toggleBtnCaption = authMode === 'login' ? 'Create a new user' : 'Log in with existing user'
   const queryParam = authMode === 'login' ? '?mode=signup' : '?mode=login'
+
+  const isSubmitting = navigation.state !== 'idle'
 
   return (
     <Form method="post" className="form" id="auth-form">
