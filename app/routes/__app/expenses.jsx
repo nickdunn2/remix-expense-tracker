@@ -7,6 +7,15 @@ import { getExpenses } from '~/data/expenses.server'
 
 export default function ExpensesLayout() {
   const expenses = useLoaderData()
+  const hasExpenses = expenses && expenses.length > 0
+
+  const expensesList = <ExpensesList expenses={expenses} />
+  const noExpensesMessage = (
+    <section id="no-expenses">
+      <h1>No expenses found</h1>
+      <p>Start <Link to="add">adding some</Link> today.</p>
+    </section>
+  )
 
   return (
     <main>
@@ -22,7 +31,7 @@ export default function ExpensesLayout() {
             <span>Load Raw Data</span>
           </a>
         </section>
-        <ExpensesList expenses={expenses} />
+        { hasExpenses ? expensesList : noExpensesMessage }
       </main>
     </main>
   )
