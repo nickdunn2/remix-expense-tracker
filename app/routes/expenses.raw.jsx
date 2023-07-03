@@ -1,5 +1,6 @@
-// expenses/raw
+import { getExpenses } from '~/data/expenses.server'
 
+// expenses/raw
 export function loader() {
-  return {}
+  return getExpenses()
 }
