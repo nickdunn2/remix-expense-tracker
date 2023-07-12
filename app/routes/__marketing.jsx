@@ -1,6 +1,7 @@
 import { Outlet } from '@remix-run/react'
 import marketingStyles from '~/styles/marketing.css'
 import MainHeader from '~/components/navigation/MainHeader'
+import { getUserFromSession } from '~/data/auth.server'
 
 export default function MarketingLayout() {
   return (
@@ -9,6 +10,10 @@ export default function MarketingLayout() {
       <Outlet />
     </>
   )
+}
+
+export async function loader({ request }) {
+  return await getUserFromSession(request)
 }
 
 export function links() {

@@ -1,7 +1,18 @@
 import Logo from '../util/Logo'
-import { Link, NavLink } from '@remix-run/react'
+import { Form, Link, NavLink, useLoaderData } from '@remix-run/react'
 
 function MainHeader() {
+  const userId = useLoaderData()
+
+  /**
+   * Generate either logout form button or login Link, based on existence of user.
+   */
+  const authEl = userId ?
+    <Form id="logout-form" method="post" action="/logout">
+      <button className="cta-alt">Logout</button>
+    </Form> :
+    <Link to="/auth" className="cta">Login</Link>
+
   return (
     <header id="main-header">
       <Logo />
@@ -18,9 +29,7 @@ function MainHeader() {
       <nav id="cta-nav">
         <ul>
           <li>
-            <Link to="/auth" className="cta">
-              Login
-            </Link>
+            {authEl}
           </li>
         </ul>
       </nav>
