@@ -4,6 +4,7 @@ import { getExpenses } from '~/data/expenses.server'
 import { useCatch, useLoaderData } from '@remix-run/react'
 import { json } from '@remix-run/node'
 import Error from '~/components/util/Error'
+import { requireUserSession } from '~/data/auth.server'
 
 export default function ExpensesAnalysisPage() {
   const expenses = useLoaderData()
@@ -16,7 +17,9 @@ export default function ExpensesAnalysisPage() {
   )
 }
 
-export async function loader() {
+export async function loader({ request }) {
+  await requireUserSession(request)
+
   const expenses = await getExpenses()
 
   if (!expenses || expenses.length === 0) {
