@@ -3,6 +3,7 @@ import ExpensesList from '~/components/expenses/ExpensesList'
 import { FaDownload, FaPlus } from 'react-icons/fa'
 import { getExpenses } from '~/data/expenses.server'
 import { requireUserSession } from '~/data/auth.server'
+import { json } from '@remix-run/node'
 
 // /expenses => shared layout
 
@@ -40,5 +41,17 @@ export default function ExpensesLayout() {
 
 export async function loader({ request }) {
   const userId = await requireUserSession(request)
-  return await getExpenses(userId)
+  const expenses = await getExpenses(userId)
+
+  return json(expenses, {
+    headers: {
+      'Cache-Control': 'max-age=3' // 3 seconds
+    }
+  })
+}
+
+export function headers({loaderHeaders}) {
+  return {
+    'Cache-Control': loaderHeaders.get('Cache-Control')
+  }
 }

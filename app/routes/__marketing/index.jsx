@@ -49,3 +49,9 @@ export function meta() {
     description: 'Manage your expenses with ease.'
   }
 }
+
+export function headers({parentHeaders}) {
+  return {
+    'Cache-Control': parentHeaders.get('Cache-Control')
+  }
+}
