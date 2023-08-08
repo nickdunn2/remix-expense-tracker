@@ -5,7 +5,7 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration, useCatch
+  ScrollRestoration, useCatch, useMatches
 } from '@remix-run/react'
 import sharedStyles from '~/styles/shared.css'
 import Error from '~/components/util/Error'
@@ -17,6 +17,9 @@ export const meta = () => ({
 })
 
 function Document({ title, children }) {
+  const matches = useMatches()
+  const disableJS = matches.some(match => match.handle?.disableJS)
+
   return (
     <html lang="en">
       <head>
@@ -30,7 +33,7 @@ function Document({ title, children }) {
       <body>
         {children}
         <ScrollRestoration />
-        <Scripts />
+        {!disableJS && <Scripts />}
         <LiveReload />
       </body>
     </html>
